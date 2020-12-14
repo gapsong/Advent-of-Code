@@ -2,7 +2,7 @@ export {};
 
 const fileContents = Deno.readTextFileSync('./input');
 const map = fileContents.split('\n');
-const elementsPerRow = fileContents.split('\n')[0].length;
+const elementsPerRow = map[0].length;
 
 let treeCounter = 0;
 let x = 3;
