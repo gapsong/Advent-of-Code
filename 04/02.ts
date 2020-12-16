@@ -21,19 +21,14 @@ const validateAttributes = (attribute: string): boolean => {
             return true;
         }
         case 'byr': {
-            console.log('byr', value, 1920 <= parseInt(value) && parseInt(value) <= 2002);
             return 1920 <= parseInt(value) && parseInt(value) <= 2002;
         }
 
         case 'iyr': {
-            console.log('iyr', value, 2010 <= parseInt(value) && parseInt(value) <= 2020);
-
             return 2010 <= parseInt(value) && parseInt(value) <= 2020;
         }
 
         case 'eyr': {
-            console.log('eyr', value, 2020 <= parseInt(value) && parseInt(value) <= 2030);
-
             return 2020 <= parseInt(value) && parseInt(value) <= 2030;
         }
 
@@ -43,15 +38,12 @@ const validateAttributes = (attribute: string): boolean => {
                 const temp = valueAtt.splice(1, valueAtt.length).reduce((acc, item) => {
                     return acc && validChars.includes(`${item}`);
                 }, true);
-                console.log('hcl', value, temp);
 
                 return temp;
             }
         }
 
         case 'ecl': {
-            console.log('ecl', value, validEyeClr.includes(value));
-
             return validEyeClr.includes(value);
         }
 
@@ -61,7 +53,6 @@ const validateAttributes = (attribute: string): boolean => {
                 return acc && validNumbers.includes(`${item}`);
             }, true);
 
-            console.log('pid', value, value.split('').length == 9 && isNumbers);
             return value.split('').length == 9 && isNumbers;
         }
 
@@ -72,7 +63,6 @@ const validateAttributes = (attribute: string): boolean => {
             }
             if (value.search('in') != -1) {
                 const height = value.split('in')[0];
-                console.log('in', height, 59 <= Number(height) && Number(height) <= 76);
                 return 59 <= Number(height) && Number(height) <= 76;
             }
         }
@@ -81,8 +71,19 @@ const validateAttributes = (attribute: string): boolean => {
 };
 
 const validPassports = passports.filter((passport) => {
+  return (
+    toBoolNumber(passport.search('byr:')) &&
+    toBoolNumber(passport.search('iyr:')) &&
+    toBoolNumber(passport.search('eyr:')) &&
+    toBoolNumber(passport.search('hgt:')) &&
+    toBoolNumber(passport.search('hcl:')) &&
+    toBoolNumber(passport.search('ecl:')) &&
+    toBoolNumber(passport.search('pid:'))
+  );
+});
+
+const validPassportsWithAttributes = validPassports.filter((passport) => {
     const passportAttributes = passport.split(/ |\n/).map(validateAttributes);
-    console.log(passportAttributes);
     const temp = passportAttributes.reduce((acc, item) => {
         return acc && item;
     }, true);
@@ -91,4 +92,4 @@ const validPassports = passports.filter((passport) => {
     return temp;
 });
 
-console.log(validPassports.length);
+console.log(validPassportsWithAttributes.length);
