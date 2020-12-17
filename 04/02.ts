@@ -71,15 +71,15 @@ const validateAttributes = (attribute: string): boolean => {
 };
 
 const validPassports = passports.filter((passport) => {
-  return (
-    toBoolNumber(passport.search('byr:')) &&
-    toBoolNumber(passport.search('iyr:')) &&
-    toBoolNumber(passport.search('eyr:')) &&
-    toBoolNumber(passport.search('hgt:')) &&
-    toBoolNumber(passport.search('hcl:')) &&
-    toBoolNumber(passport.search('ecl:')) &&
-    toBoolNumber(passport.search('pid:'))
-  );
+    return (
+        toBoolNumber(passport.search('byr:')) &&
+        toBoolNumber(passport.search('iyr:')) &&
+        toBoolNumber(passport.search('eyr:')) &&
+        toBoolNumber(passport.search('hgt:')) &&
+        toBoolNumber(passport.search('hcl:')) &&
+        toBoolNumber(passport.search('ecl:')) &&
+        toBoolNumber(passport.search('pid:'))
+    );
 });
 
 const validPassportsWithAttributes = validPassports.filter((passport) => {
@@ -88,7 +88,6 @@ const validPassportsWithAttributes = validPassports.filter((passport) => {
         return acc && item;
     }, true);
 
-    console.log(temp);
     return temp;
 });
 
